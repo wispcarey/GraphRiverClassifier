@@ -46,6 +46,11 @@ RiverPIXELS_cmap = mcolors.LinearSegmentedColormap.from_list("RiverPIXELS", cmap
 if __name__ == '__main__':
     opt = parse_option_TestAndEvaluate()
 
+    if opt.ori_cmap:
+        cmap = 'viridis'
+    else:
+        cmap = RiverPIXELS_cmap
+
     np.random.seed(42)
 
     train_dataset = np.load(opt.train_dataset_path, allow_pickle=True).item()
@@ -228,11 +233,11 @@ if __name__ == '__main__':
 
             fig, axes = plt.subplots(1, 2, figsize=(10, 5))
             ax1 = axes[0]
-            im1 = ax1.imshow(img1, cmap=RiverPIXELS_cmap)
+            im1 = ax1.imshow(img1, cmap=cmap)
             ax1.set_title('pred labels')
             ax1.axis('off')
             ax2 = axes[1]
-            im2 = ax2.imshow(img2, cmap=RiverPIXELS_cmap)
+            im2 = ax2.imshow(img2, cmap=cmap)
             ax2.set_title('gt labels')
             ax2.axis('off')
 
@@ -242,7 +247,7 @@ if __name__ == '__main__':
             fig_file_name, fig_extension = os.path.splitext(opt.test_dataset_path)
             batch_figure_path = f"{fig_file_name}_{s_batch_ind}.png"
             plt.savefig(batch_figure_path, bbox_inches='tight', dpi=300)
-            plt.show()
+            plt.close()
 
     if file_extension == ".npy":
         OA = np.sum(pred_labels == all_test_labels) / len(pred_labels)
@@ -259,15 +264,23 @@ if __name__ == '__main__':
         print(df)
     else:
         if opt.show_figures:
-            rgb_img = tif_image[:, :, [2, 1, 0]] * 3
+            rgb_img = np.clip(tif_image[:, :, [2, 1, 0]] * 3, 0, 1)
             reshape_label = pred_labels.reshape(rgb_img.shape[0], rgb_img.shape[1])
+            if opt.save_separately:
+                fig_file_name, fig_extension = os.path.splitext(opt.figure_save_path)
 
-            fig, axs = plt.subplots(1, 2, figsize=(10, 5))
-            axs[0].imshow(rgb_img, interpolation='none')
-            axs[0].axis('off')
-            axs[1].imshow(reshape_label, cmap=RiverPIXELS_cmap, interpolation='none')
-            axs[1].axis('off')
-            plt.subplots_adjust(wspace=0.05, hspace=0)
+                img1_path = f"{fig_file_name}_pred_labels.png"
+                plt.imsave(img1_path, reshape_label, cmap=cmap, format='png')
 
-            plt.savefig(opt.figure_save_path, bbox_inches='tight', dpi=300)
-            plt.show()
+                img2_path = f"{fig_file_name}_rgb_image.png"
+                plt.imsave(img2_path, rgb_img, cmap=cmap, format='png')
+            else:
+                fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+                axs[0].imshow(rgb_img, interpolation='none')
+                axs[0].axis('off')
+                axs[1].imshow(reshape_label, cmap=cmap, interpolation='none')
+                axs[1].axis('off')
+                plt.subplots_adjust(wspace=0.05, hspace=0)
+
+                plt.savefig(opt.figure_save_path, bbox_inches='tight', dpi=300)
+                plt.close()

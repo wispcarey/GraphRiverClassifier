@@ -144,6 +144,10 @@ def parse_option_TestAndEvaluate():
                         help='use the percentage of training set as the class prior.')
     parser.add_argument('--figure_save_path', type=str, default='auto',
                         help='The path that result figures are saved to')
+    parser.add_argument('--save_separately', action='store_true',
+                        help='save figures separately.')
+    parser.add_argument('--ori_cmap', action='store_true',
+                        help='use the original color map.')
 
     ## for custom dataset only
     parser.add_argument('--dev', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',

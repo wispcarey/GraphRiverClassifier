@@ -223,6 +223,7 @@ def set_model(opt):
 def set_loader_from_tif(opt):
     with rasterio.open(opt.test_dataset_path) as dataset:
         image = dataset.read()
+    print(f"Image shape: {image.shape}.")
 
     if opt.test_dataset_type == 'Landsat 5':
         alpha, beta = np.ones(6), np.zeros(6)
