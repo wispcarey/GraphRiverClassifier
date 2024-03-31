@@ -1,6 +1,6 @@
-# GlobalRiverPIXELS
+# Global Earth Classifier
 
-GlobalRiverPIXELS offers a tool to detect surface water and sediment in LandSat images, utilizing the high-quality,
+Global Earth Classifier (GEC) offers a tool to detect surface water and sediment in LandSat images, utilizing the high-quality,
 manually annotated [RiverPIXELS](https://data.ess-dive.lbl.gov/view/doi:10.15485/1865732) Dataset by LANL scientists.
 This project aims to enhance environmental monitoring and research with its precise identification capabilities for
 water bodies and sediments globally.
@@ -28,7 +28,7 @@ We recommend using Google Colab for running this demo, as it provides easy acces
 
 ### Setting Up
 Follow these steps to set up and run the demo:
-1. Download this project and place it in your Google Drive under the path `MyDrive/GlobalRiverPIXELS`.
+1. Download this project and place it in your Google Drive under the path `MyDrive/Global_Earth_Classifier`.
 2. Open the project in Google Colab.
 3. Modify the `config.yaml` file in the project folder:
    - Change the `GEE_PROJECT` variable to your Google Earth Engine project name.
