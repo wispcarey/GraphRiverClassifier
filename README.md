@@ -1,6 +1,6 @@
-# Global Earth Classifier
+# GraphRiverClassifier
 
-Global Earth Classifier (GEC) offers a tool to detect surface water and sediment in LandSat images, utilizing the high-quality,
+GraphRiverClassifier offers a tool to detect surface water and sediment in LandSat images, utilizing the high-quality,
 manually annotated [RiverPIXELS](https://data.ess-dive.lbl.gov/view/doi:10.15485/1865732) Dataset by LANL scientists.
 This project aims to enhance environmental monitoring and research with its precise identification capabilities for
 water bodies and sediments globally.
